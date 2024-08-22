@@ -9,19 +9,19 @@ import UIKit
 import CoreLocation
 
 let macUUID = "8AEE1303-DCE9-9120-7381-2503450D3733"
+let sample = UUID(uuidString: macUUID)!
+let sampleMajor: CLBeaconMajorValue = 1234
+let sampleMinor: CLBeaconMinorValue = 5678
+
+let beaconUUID = UUID(uuidString: "41462998-6CEB-4511-9D46-1F7E27AA6572")!
+let beaconMajor: CLBeaconMajorValue = 18
+let beaconMinor: CLBeaconMinorValue = 5
 
 class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var textView: UITextView!
 
     var locationManager: CLLocationManager!
-    let beaconUUID = UUID(uuidString: "41462998-6CEB-4511-9D46-1F7E27AA6572")!
-    let beaconMajor: CLBeaconMajorValue = 18
-    let beaconMinor: CLBeaconMinorValue = 5
-
-    let sample = UUID(uuidString: macUUID)!
-    let sampleMajor: CLBeaconMajorValue = 1234
-    let sampleMinor: CLBeaconMinorValue = 5678
 
     let beaconIdentifier = "TargetBeacon"
 
@@ -35,10 +35,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
 
         // 位置情報の利用許可を要求
-        locationManager.requestAlwaysAuthorization()
-
-        // iBeaconのモニタリングを開始
-        startMonitoringBeacon()
+        locationManager.requestWhenInUseAuthorization()
     }
 
     func startMonitoringBeacon() {
@@ -64,7 +61,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             default:
                 updateLog("Beacon is out of range.")
             }
-
         } else {
             updateLog("No beacons found.")
         }
